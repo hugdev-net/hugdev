@@ -1,0 +1,3 @@
+wget https://nodejs.org/dist/v22.16.0/node-v22.16.0-linux-x64.tar.xz
+
+tar -xvf node-v22.16.0-linux-x64.tar.xz
