@@ -36,6 +36,6 @@ sudo systemctl restart docker
 
 # 8. 验证安装
 sudo apt list --installed | grep docker
-docker run --rm --gpus all nvidia/cuda:12.2.0-base-ubuntu22.04 nvidia-smi
-
+docker run --rm --gpus all swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/nvidia/cuda:12.2.0-base-ubuntu22.04 nvidia-smi
+docker ps
 

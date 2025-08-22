@@ -4,9 +4,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
 apt-get install -y --no-install-recommends language-pack-zh-hans language-pack-en ca-certificates \
-  sudo systemctl curl wget git vim nano net-tools poppler-utils lsof tar zip unzip xz-utils dstat lrzsz \
+  sudo curl wget git vim nano net-tools poppler-utils lsof tar zip unzip xz-utils dstat lrzsz \
   telnet iputils-ping ngrep strace ltrace tcpdump procps htop iotop sysstat iftop
-
 
 timedatectl set-timezone Asia/Shanghai
 
@@ -22,7 +21,7 @@ useradd -u 1000 -g dev -m -s /bin/bash dev
 usermod -aG sudo dev
 
 # 设置常用环境变量和别名
-cat <<'EOF' > /home/dev/.bash_profile
+cat <<'EOF' > ~/.bash_profile
 if [ -f ~/.bashrc ]; then
         . ~/.bashrc
 fi

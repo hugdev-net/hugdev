@@ -19,6 +19,11 @@ sha256sum ubuntu-22.04.*-desktop-amd64.iso
 
 ## 制作启动 U 盘
 
+注意：
+
+- 此操作会清除 U 盘上所有数据，请提前备份重要文件。
+- 请选择 USB 3.0 及以上版本的 U 盘以获得更快的读写速度。
+
 ### Windows 下：使用 Rufus
 
 下载并运行 Rufus：https://rufus.ie/
@@ -35,16 +40,35 @@ sha256sum ubuntu-22.04.*-desktop-amd64.iso
 
 ### Linux 下：使用 dd
 
-**注意：操作不当可能擦除错误磁盘，请务必确认 of= 参数指向你的 U 盘设备（如 /dev/sdd）。**
+- 将 sdX 替换为实际 U 盘设备名（可用 lsblk 或 fdisk -l 确认）。
 
 ```shell
-smartctl -i /dev/sdX
-
-sudo dd if=~/Downloads/ubuntu-22.04.*-desktop-amd64.iso of=/dev/sdX bs=4M status=progress conv=fsync
+lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT /dev/sdX
+fdisk -l /dev/sdX
 ```
 
-将 sdX 替换为实际 U 盘设备名（可用 lsblk 或 fdisk -l 确认）。
-等待命令执行完毕（无进度输出时也请耐心等待，直至提示完成）。
+- 卸载 U 盘所有分区并重新分区格式化（可选）
+
+```shell
+umount /dev/sdX*
+parted /dev/sdX mklabel msdos
+mkfs.ext4 /dev/sdX
+mkdir -p /mnt/usb
+mount /dev/sdX /mnt/usb
+```
+
+- 测试U盘速度 **注意：操作不当可能擦除错误磁盘，请务必确认 of= 参数指向你的 U 盘设备（如 /dev/sdX）。**
+
+```shell
+dd if=/dev/sdX of=/dev/null bs=4M status=progress iflag=direct
+dd if=/dev/zero of=/mnt/usb/test.img bs=1M count=36 conv=fdatasync status=progress
+```
+
+- 因为 Linux 会先把数据写入内存缓存，再慢慢同步到 U 盘，等待命令执行完毕（无进度输出时也请耐心等待，直至提示完成）。
+
+```shell
+sudo dd if=~/Downloads/ubuntu-22.04.*-desktop-amd64.iso of=/dev/sdX bs=4M status=progress conv=fsync
+```
 
 ---
 
@@ -75,16 +99,23 @@ sudo dd if=~/Downloads/ubuntu-22.04.*-desktop-amd64.iso of=/dev/sdX bs=4M status
 - 选择语言、键盘布局
 - 连接网络（可跳过，联网可下载更新）
 - 安装类型：
-    - 正常安装：含桌面环境、办公软件、浏览器等
     - 最小安装：仅包含基础系统与浏览器
-    - 更新与其他软件：建议勾选“下载更新”和（可选）“安装第三方软件”以支持 Wi-Fi 驱动和多媒体。
 - 磁盘分区：
     - 擦除整个磁盘并安装 Ubuntu（新机或可清空时选用）。
-    - 手动分区（需要自定义 /boot、/、/home、swap 等）。
-    - 建议至少保留 20 GB 给根分区 (/)。
-    - 建议创建 1–2 GB 的 swap（或使用 swapfile）。
+    - 选择 （无）HA
 - 时区、用户名/主机名、密码 设置。
 - 点击 “现在安装”，确认分区更改后开始复制文件并安装。
 
 安装完成后，按提示重启。
 
+---
+
+## 初次登录
+
+- 配置网络
+- 安装远程登录
+
+```shell
+sshd apt install -y openssh-server net-tools
+netstat -lntp | grep ssh
+```
