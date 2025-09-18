@@ -4,7 +4,7 @@ export DOCKER_REGISTRY_MIRROR=${DOCKER_REGISTRY_MIRROR:-"https://docker.m.daoclo
 # 国内镜像 & 开启容器 cuda
 sudo tee /etc/docker/daemon.json <<EOF
 {
-  "registry-mirrors": [
+    "registry-mirrors": [
           "${DOCKER_REGISTRY_MIRROR}"
     ],
     "runtimes": {

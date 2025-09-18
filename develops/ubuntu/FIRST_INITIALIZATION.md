@@ -96,7 +96,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends language-pack-zh-hans language-pack-en ca-certificates \
-  sudo curl wget git vim nano net-tools poppler-utils lsof tar zip unzip xz-utils dstat lrzsz \
+  sudo curl wget git git-lfs vim nano net-tools poppler-utils lsof tar zip unzip xz-utils p7zip-full dstat lrzsz \
   telnet iputils-ping ngrep strace ltrace tcpdump procps htop iotop sysstat iftop
 
 sudo timedatectl set-timezone Asia/Shanghai
@@ -106,7 +106,6 @@ sudo systemctl enable chronyd
 sudo systemctl restart chronyd
 sudo chronyc sources
 sudo timedatectl
-
 ```
 
 ### bash 环境
@@ -212,17 +211,13 @@ dpkg -i google-chrome-stable_current_amd64.deb
 
 - [Docker](../../deploys/docker/install_docker_ce_nvidia.sh)
 
-### JB IDE
-
-Toolbox
-
-#### C & C++ 环境
+#### C & C++ 编译环境 （可选）
 
 ```shell
-apt install -y build-essential cmake gdb valgri
+apt install -y build-essential cmake gdb valgrind 
 ```
 
-#### JAVA 环境
+#### JAVA 环境（可选）
 
 ```shell
 mkdir -p ~/apps
@@ -243,15 +238,15 @@ source ~/.bash_profile
 java -version
 ```
 
-#### Python 环境
+#### Python 环境（可选）
 
-- pyenv 自动编译安装&管理 多个不同版本的 Python 解释器
+- 使用 pyenv 管理多版本 Python 环境 [Python](../../deploys/python/python_env.sh)
 - Poetry 规范管理项目依赖、可复现安装（poetry.lock）、构建/发布
 
-```shell
+#### NodeJS 环境（可选）
 
-```
+- 使用 nvm 管理多版本 Nodejs 环境 [Nodejs](../../deploys/nodejs/nodejs_env.sh)
 
-#### NodeJS 环境
+### 开发 IDE（可选）
 
-
+Toolbox
