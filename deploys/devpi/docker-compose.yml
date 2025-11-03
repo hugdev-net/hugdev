@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  devpi:
+    image: devpi-server:latest
+    container_name: devpi
+    restart: always
+    ports:
+      - "3141:3141"
+    volumes:
+      - /data/devpi/files:/app/devpi/server/+files
+    environment:
+      - TZ=Asia/Shanghai
+    networks:
+      - devpi-net
+
+networks:
+  devpi-net:
+    driver: bridge

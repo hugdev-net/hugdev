@@ -1,0 +1,14 @@
+deb http://repo.huaweicloud.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://repo.huaweicloud.com/ubuntu/ jammy main restricted universe multiverse
+
+# 安全更新
+deb http://repo.huaweicloud.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://repo.huaweicloud.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 推荐更新
+deb http://repo.huaweicloud.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://repo.huaweicloud.com/ubuntu/ jammy-updates main restricted universe multiverse
+
+# 回溯更新
+deb http://repo.huaweicloud.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://repo.huaweicloud.com/ubuntu/ jammy-backports main restricted universe multiverse
