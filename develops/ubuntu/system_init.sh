@@ -1,11 +1,12 @@
 
 # 安装Ubuntu 22.04 LTS 系统的基础工具
 export DEBIAN_FRONTEND=noninteractive
+export USERNAME=dev
 
 apt-get update
 apt-get install -y --no-install-recommends language-pack-zh-hans language-pack-en ca-certificates \
   sudo curl wget git vim nano net-tools poppler-utils lsof tar zip unzip xz-utils dstat lrzsz \
-  telnet iputils-ping ngrep strace ltrace tcpdump procps htop iotop sysstat iftop
+  telnet iputils-ping ngrep strace ltrace tcpdump procps htop iotop sysstat iftop dos2unix
 
 timedatectl set-timezone Asia/Shanghai
 
@@ -16,9 +17,9 @@ chronyc sources
 timedatectl
 
 # 创建开发用户
-groupadd -g 1000 dev
-useradd -u 1000 -g dev -m -s /bin/bash dev
-usermod -aG sudo dev
+groupadd -g 1000 $USERNAME
+useradd -u 1000 -g $USERNAME -m -s /bin/bash $USERNAME
+usermod -aG sudo $USERNAME
 
 # 设置常用环境变量和别名
 cat <<'EOF' > ~/.bash_profile
@@ -49,5 +50,5 @@ SUPPORTED=en_US.UTF8:en_US:en; export SUPPORTED
 TZ='America/Los_Angeles'; export TZ
 EOF
 
-mkdir -p /home/dev/apps
-chown -R dev:dev /home/dev/
+mkdir -p /home/$USERNAME/apps
+chown -R $USERNAME:$USERNAME /home/$USERNAME/

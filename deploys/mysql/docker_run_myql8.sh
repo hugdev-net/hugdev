@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-MYSQL_ROOT_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
-echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD"
-MYSQL_PATH="/opt/apps/mysql"
-MYSQL_HOST="127.0.0.1"
-MYSQL_PROT="3306"
-MYSQL_USER=$(id -u)
-MYSQL_GROUP=$(id -g)
+export MYSQL_ROOT_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
+echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_ PASSWORD"
+export MYSQL_PATH="/opt/apps/mysql"
+export MYSQL_HOST="127.0.0.1"
+export MYSQL_PROT="3306"
+export DOCKER_RUN_USER=$(id -u)
+export DOCKER_RUN_GROUP=$(id -g)
 
 mkdir -p $MYSQL_PATH/{conf,data,logs,run}
 
@@ -45,12 +45,13 @@ skip-name-resolve
 
 docker run -d \
   --name mysql8 \
-  --user $MYSQL_USER:$MYSQL_GROUP \
   -p $MYSQL_HOST:$MYSQL_PROT:3306 \
   -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
   -v $MYSQL_PATH/conf/my.cnf:/etc/mysql/my.cnf:ro \
   -v $MYSQL_PATH/data:/var/lib/mysql \
   -v $MYSQL_PATH/logs:/var/log/mysql \
   -v $MYSQL_PATH/run:/var/run/mysqld \
+  --user $DOCKER_RUN_USER:$DOCKER_RUN_GROUP \
   --restart=unless-stopped \
   mysql:8.0.33
+

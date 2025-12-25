@@ -12,7 +12,7 @@ if [ "64" = "`getconf LONG_BIT`" ]; then
         LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lib64:/usr/lib64:/usr/local/lib64; export LD_LIBRARY_PATH
 else
         LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/lib:/usr/lib:/usr/local/lib; export LD_LIBRARY_PATH
-fi;
+fi
 
 USERNAME="`whoami`"
 if [ "0" = "`id -u $USERNAME`" ]; then

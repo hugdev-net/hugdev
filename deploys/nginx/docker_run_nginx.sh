@@ -1,6 +1,8 @@
 
 export NGINX_PATH="/opt/apps/nginx"
-export HOST_IP="192.168.1.100"
+export HOST_IP="127.0.0.1"
+export DOCKER_RUN_USER=$(id -u)
+export DOCKER_RUN_GROUP=$(id -g)
 
 #创建目录
 mkdir -p $NGINX_PATH/{conf,html,logs,certs,cache,run}
@@ -11,6 +13,9 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
 -keyout $NGINX_PATH/certs/nginx.key -out $NGINX_PATH/certs/nginx.crt \
 -subj "/C=US/ST=California/L=Mountain View/O=xhproxy.org/CN=xhproxy.org"
 chmod 644 $NGINX_PATH/certs/*
+
+#复制相关配置文件
+# rz nginx.conf
 
 #启动容器
 docker run -d --name nginx \
@@ -23,6 +28,6 @@ docker run -d --name nginx \
   -v $NGINX_PATH/cache:/var/cache/nginx \
   -v $NGINX_PATH/run:/var/run \
   -v $NGINX_PATH/certs:/etc/nginx/certs:ro \
-  --user 1000:1000 \
+  --user $DOCKER_RUN_USER:$DOCKER_RUN_GROUP \
   --restart unless-stopped \
   nginx:stable
