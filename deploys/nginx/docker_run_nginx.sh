@@ -1,6 +1,8 @@
+export PROJECT_NAME="app"
+export SETUP_PATH="/opt/${PROJECT_NAME}"
 
-export NGINX_PATH="/opt/apps/nginx"
-export HOST_IP="127.0.0.1"
+export NGINX_PATH="${SETUP_PATH}/nginx"
+export HOST_IP="0.0.0.0"
 export DOCKER_RUN_USER=$(id -u)
 export DOCKER_RUN_GROUP=$(id -g)
 
@@ -18,7 +20,8 @@ chmod 644 $NGINX_PATH/certs/*
 # rz nginx.conf
 
 #启动容器
-docker run -d --name nginx \
+docker run -d --add-host=host.docker.internal:host-gateway \
+  --name ${PROJECT_NAME}_nginx \
   -p $HOST_IP:8080:80 \
   -p $HOST_IP:8443:443 \
   -v $NGINX_PATH/html:/usr/share/nginx/html \

@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+export PROJECT_NAME="app"
+export SETUP_PATH="/opt/${PROJECT_NAME}"
+
 export MYSQL_ROOT_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
 echo "MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_ PASSWORD"
-export MYSQL_PATH="/opt/apps/mysql"
-export MYSQL_HOST="127.0.0.1"
+export MYSQL_PATH="${SETUP_PATH}/mysql"
+export MYSQL_HOST="host.docker.internal"
 export MYSQL_PROT="3306"
 export DOCKER_RUN_USER=$(id -u)
 export DOCKER_RUN_GROUP=$(id -g)
@@ -43,8 +46,8 @@ skip-name-resolve
 ' > $MYSQL_PATH/conf/my.cnf
 
 
-docker run -d \
-  --name mysql8 \
+docker run -d --add-host=host.docker.internal:host-gateway \
+  --name ${PROJECT_NAME}_mysql8 \
   -p $MYSQL_HOST:$MYSQL_PROT:3306 \
   -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
   -v $MYSQL_PATH/conf/my.cnf:/etc/mysql/my.cnf:ro \

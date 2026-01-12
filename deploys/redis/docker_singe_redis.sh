@@ -1,6 +1,8 @@
+export PROJECT_NAME="app"
+export SETUP_PATH="/opt/${PROJECT_NAME}"
 
-export REDIS_PATH="/opt/apps/redis"
-export HOST_IP="127.0.0.1"
+export REDIS_PATH="${SETUP_PATH}/redis"
+export HOST_IP="host.docker.internal"
 export REDIS_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
 echo "REDIS_PASSWORD: $REDIS_PASSWORD"
 export DOCKER_RUN_USER=$(id -u)
@@ -13,7 +15,9 @@ protected-mode no
 bind 0.0.0.0
 requirepass $REDIS_PASSWORD" > $REDIS_PATH/conf/redis.conf
 
-docker run -d --name redis -p $HOST_IP:6379:6379 \
+docker run -d --add-host=host.docker.internal:host-gateway \
+  --name ${PROJECT_NAME}_redis \
+  -p $HOST_IP:6379:6379 \
   -v $REDIS_PATH/data:/data \
   -v $REDIS_PATH/conf/redis.conf:/etc/redis/redis.conf \
   --user $DOCKER_RUN_USER:$DOCKER_RUN_GROUP \
