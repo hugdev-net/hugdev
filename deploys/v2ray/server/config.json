@@ -1,0 +1,50 @@
+{
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "debug"
+  },
+
+  "inbounds": [
+    {
+      "port": 10800,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "xxxxxxxxxxxxxx passwd",
+            "level": 1,
+            "alterId": 0
+          }
+        ]
+      }
+    }
+  ],
+
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ],
+
+  "dns": {
+    "hosts": {
+      "domain:v2fly.org": "www.vicemc.net",
+      "domain:github.io": "pages.github.com",
+      "domain:wikipedia.org": "www.wikimedia.org",
+      "domain:shadowsocks.org": "electronicsrealm.com"
+    },
+    "servers": [
+      {
+        "address": "114.114.114.114",
+        "port": 53,
+        "domains": [
+          "geosite:cn"
+        ]
+      },
+      "8.8.8.8"
+    ]
+  }
+}
+
