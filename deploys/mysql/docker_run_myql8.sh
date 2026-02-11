@@ -50,6 +50,7 @@ docker run -d --add-host=host.docker.internal:host-gateway \
   --name ${PROJECT_NAME}_mysql8 \
   -p $MYSQL_HOST:$MYSQL_PROT:3306 \
   -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" \
+  -e TZ=Asia/Shanghai \
   -v $MYSQL_PATH/conf/my.cnf:/etc/mysql/my.cnf:ro \
   -v $MYSQL_PATH/data:/var/lib/mysql \
   -v $MYSQL_PATH/logs:/var/log/mysql \
