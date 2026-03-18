@@ -23,5 +23,12 @@ npm -v
 # 安装 pnpm
 npm install -g pnpm@latest
 pnpm config set registry https://registry.npmmirror.com
-# 指定 pnpm 版本
-# corepack enable && corepack prepare pnpm@8.15.6 --activate
+
+pnpm setup
+
+source ~/.bashrc
+
+# 验证版本
+node -v
+npm -v
+pnpm -v
