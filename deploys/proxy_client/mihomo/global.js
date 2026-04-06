@@ -38,6 +38,13 @@ function main(config) {
         groupFilters: {
             normalLanding: {
                 include: [
+                    /日本/i,
+                    /jp/i
+                ],
+                exclude: []
+            },
+            overseasExit: {
+                include: [
                     /香港/i,
                     /hk/i,
                     /台湾/i,
@@ -51,27 +58,10 @@ function main(config) {
                 ],
                 exclude: []
             },
-            overseasExit: {
-                include: [
-                    /美国/i,
-                    /\bUS\b/i,
-                    /USA/i,
-                    /加拿大/i,
-                    /CA(?!N)/i,
-                    /英国/i,
-                    /\bUK\b/i,
-                    /德国/i,
-                    /法国/i,
-                    /荷兰/i,
-                    /澳大利亚/i,
-                    /澳洲/i,
-                    /AU/i
-                ],
-                exclude: []
-            },
             others: {
                 include: [
-                    /.*/
+                    /美国/i,
+                    /US/i
                 ],
                 exclude: []
             }
@@ -123,11 +113,19 @@ function main(config) {
             "DOMAIN,api.anthropic.com,🏠 静态住宅",
             "DOMAIN-SUFFIX,anthropic.com,🏠 静态住宅",
             "DOMAIN-SUFFIX,claude.ai,🏠 静态住宅",
+            "DOMAIN-SUFFIX,openai.com,🏠 静态住宅",
+            "DOMAIN-SUFFIX,google.com,🏠 静态住宅",
+            "DOMAIN-KEYWORD,google,🏠 静态住宅",
+            "DOMAIN-SUFFIX,ping0.cc,🏠 静态住宅",
 
             // 规则集兜底
             "RULE-SET,openai,🏠 静态住宅",
             "RULE-SET,anthropic,🏠 静态住宅",
             "RULE-SET,gemini,🏠 静态住宅",
+
+            "DOMAIN-SUFFIX,microsoft.com,🚪 普通落地",
+            "DOMAIN-SUFFIX,msn.com,🚪 普通落地",
+
 
             // 国内应用直连
             "PROCESS-NAME,Foxmail.exe,DIRECT",
