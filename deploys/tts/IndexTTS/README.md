@@ -7,6 +7,7 @@
 - 安装 lfs
 
 ```bash
+apt install git-lfs
 git lfs install
 ```
 

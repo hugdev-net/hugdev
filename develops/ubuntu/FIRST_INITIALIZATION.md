@@ -88,6 +88,32 @@ sudo reboot
 
 ## 基础软件&配置
 
+### 国内源
+
+```shell
+mv /etc/apt/sources.list /etc/apt/sources.list.bak
+cat <<'EOF' > /etc/apt/sources.list
+deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+
+# 安全更新
+deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 推荐更新
+deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+
+# 回溯更新
+deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+
+# 可选：预发布软件（慎用）
+# deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+EOF
+```
+
 ### 基础软件
 
 ```shell

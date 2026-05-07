@@ -1,5 +1,11 @@
 curl -fsSL https://ollama.com/install.sh | sh
 
+# 指定使用数据盘空间
+rm -rf  ~/.ollama
+mkdir -p /data/cache/.ollama
+chown ollama:ollama -R /data/cache/.ollama
+ln -s  /data/cache/.ollama ~/
+
 # 修改监听为 172.17.0.1
 # sudo systemctl edit ollama
 # [Service]
@@ -29,3 +35,11 @@ curl http://172.17.0.1:11434/api/chat -d '{
 
 OLLAMA_HOST=172.17.0.1 ollama stop gemma4:26b
 
+
+#让模型可以常驻内存
+#curl http://172.17.0.1:11434/api/generate -d '{"model": "gemma4:26b", "keep_alive": -1}'
+#{"model":"gemma4:26b","created_at":"2025-02-20T10:09:15.220295791Z","response":"","done":true,"done_reason":"load"}
+
+
+#如何停止  ollama 服务
+#systemctl stop ollama.service

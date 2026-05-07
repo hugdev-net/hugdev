@@ -13,14 +13,27 @@ docker exec -it claude-code-dev bash
 apt update && apt install -y curl git vim wget 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 source ~/.nvm/nvm.sh
-nvm install 22
+nvm install 24
 npm install -g npm
 ```
 
-## 安装 Claude Code 和 Claude Code Router
+## 安装 Claude Code
+
+- 官网推荐
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+- 可选
 
 ```bash
 npm install -g @anthropic-ai/claude-code
+```
+
+## 安装 Claude Code Router
+
+```bash
 npm install -g @musistudio/claude-code-router
 ```
 
