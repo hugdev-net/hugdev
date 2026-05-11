@@ -31,7 +31,7 @@ umask 022
 
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
 PATH=$PATH:$HOME/bin:$HOME/sbin:$HOME/usr/bin:$HOME/usr/sbin:$HOME/usr/local/bin:$HOME/usr/local/sbin
-export PATH="$(find ~/apps -type d -name 'bin' | paste -sd: -):$PATH"
+export PATH="$(find ~/apps -mindepth 2 -maxdepth 2 -type d -name 'bin' | paste -sd: -):$PATH"
 
 alias l='ls --color=auto -l'
 alias ls='ls --color=auto -a'

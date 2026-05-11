@@ -24,9 +24,8 @@ npm -v
 npm install -g pnpm@latest
 pnpm config set registry https://registry.npmmirror.com
 
-pnpm setup
-
-source ~/.bashrc
+#pnpm setup
+#source ~/.bashrc
 
 # 验证版本
 node -v
