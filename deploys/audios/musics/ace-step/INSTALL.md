@@ -7,13 +7,17 @@ git clone https://github.com/ACE-Step/ACE-Step-1.5.git
 cd ACE-Step-1.5
 uv sync
 
+# 启动 Gradio 网页界面
 uv run acestep --port 7861 --language zh  --device cuda --lm_model_path acestep-5Hz-lm-0.6B --download-source modelscope --enable-api --init_service true --batch_size 1 --init_llm false
 
+# 启动 REST API 服务器
+uv run acestep-api --port 8001 --download-source modelscope --init-llm false
+
 # 启动 Gradio 网页界面
-./start_gradio_ui.sh
+# ./start_gradio_ui.sh
 
 # 启动 REST API 服务器
-./start_api_server.sh
+# ./start_api_server.sh
 ```
 
 首次运行时模型会自动下载。打开 http://localhost:7860（Gradio）或 http://localhost:8001（API）。

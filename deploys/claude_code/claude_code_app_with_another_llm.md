@@ -14,7 +14,7 @@
 - 安装 https://claude.com/download
 - 左上三横线 --> Help --> Troubleshooting --> Enable Developer Mode
 - ClaudeCode 会自动重启
-- 左上三横线 --> Developer -->  Configure Third-Party Inference
+- 左上三横线 --> Developer -->  Configure Third-Party Inference （注意配置正确，后续不好改）
     - Connection
         - Gateway
             - base URL：http://127.0.0.1:15721
@@ -43,9 +43,9 @@
     - 点击：Export --> Windows registry file
         - 保存至桌面
 - 添加注册表信息
-    - 右键记事本打开，在最后一行添加
+    - 右键记事本打开，在最后一行添加 （注意 必须填写 Claude 目前存在的模型）
         ```text
-        "inferenceModels"="[\"haiku\",\"sonnet\",\"opus\"]"
+        "inferenceModels"="[\"claude-haiku-4.5\",\"claude-sonnet-4.6\",\"claude-opus-4.7\"]"
         ```
     - 保存后，双击导入注册表
 - 彻底退出 Claude Code
