@@ -36,6 +36,15 @@ curl http://172.17.0.1:11434/api/chat -d '{
 OLLAMA_HOST=172.17.0.1 ollama stop gemma4:26b
 
 
+# Ollama 后台服务 context 开到 128K
+sudo systemctl edit ollama
+#在 [Service] 中添加
+# Environment="OLLAMA_CONTEXT_LENGTH=65536"
+sudo systemctl daemon-reload
+sudo systemctl restart ollama
+ollama ps
+
+
 #让模型可以常驻内存
 #curl http://172.17.0.1:11434/api/generate -d '{"model": "gemma4:26b", "keep_alive": -1}'
 #{"model":"gemma4:26b","created_at":"2025-02-20T10:09:15.220295791Z","response":"","done":true,"done_reason":"load"}

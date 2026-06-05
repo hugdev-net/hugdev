@@ -43,10 +43,17 @@
     - 点击：Export --> Windows registry file
         - 保存至桌面
 - 添加注册表信息
-    - 右键记事本打开，在最后一行添加 （注意 必须填写 Claude 目前存在的模型）
-        ```text
-        "inferenceModels"="[\"claude-haiku-4.5\",\"claude-sonnet-4.6\",\"claude-opus-4.7\"]"
-        ```
+    - 右键记事本打开，在最后一行添加 inferenceModels （注意 必须填写 Claude 目前存在的模型）
+```text
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Claude]
+"disableDeploymentModeChooser"=dword:00000001
+"inferenceProvider"="gateway"
+"inferenceGatewayBaseUrl"="http://127.0.0.1:15721"
+"inferenceGatewayApiKey"="PROXY_MANAGED"
+"inferenceModels"="[\"claude-haiku-4.5\",\"claude-sonnet-4.6\",\"claude-opus-4.7\"]"
+```
     - 保存后，双击导入注册表
 - 彻底退出 Claude Code
     - 关闭

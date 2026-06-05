@@ -2,11 +2,15 @@
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+
+hermes --version
 ```
 
 ## 首次启动
 
-- 模型
+- 模型 (hermes setup model)
+    - OpenAI Codex
+    -
     - (○) Custom endpoint (enter URL manually)
       API base URL: http://172.17.0.1:11434/v1
       API key: ollama （随便填，一般不会校验）
@@ -16,6 +20,10 @@ curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scri
     - hermes gateway setup
     - Weixin
     - 扫描
+    - ect ESC cancel
+      → (●) Use DM pairing approval (recommended)
+      (○) Allow all direct messages
+
     - 全部默认 + Y
     - hermes pairing approve weixin XXXXXX
 
@@ -40,7 +48,7 @@ python3 bootstrap-py
 ## 详细配置
 
 - 核心记忆
-- 
+-
 
 ```bash
 hermes setup
@@ -56,6 +64,18 @@ hermes
 ```
 
 ## 停止服务
+
+```bash
+
+```
+
+## 消息网关
+
+```bash
+hermes gateway
+hermes gateway restart
+hermes gateway stop
+```
 
 ## 其它问题
 

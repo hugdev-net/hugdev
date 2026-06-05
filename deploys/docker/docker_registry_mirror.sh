@@ -1,3 +1,7 @@
+## 可选国内镜像源
+# 	  "https://docker.1ms.run",
+#	    "https://docker.xuanyuan.me",
+#	    "https://docker.m.daocloud.io"
 
 export DOCKER_REGISTRY_MIRROR=${DOCKER_REGISTRY_MIRROR:-"https://docker.m.daocloud.io"}
 
@@ -18,3 +22,4 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+docker info

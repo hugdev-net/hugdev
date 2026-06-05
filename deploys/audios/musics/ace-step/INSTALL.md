@@ -5,6 +5,7 @@
 ```bash
 git clone https://github.com/ACE-Step/ACE-Step-1.5.git
 cd ACE-Step-1.5
+git checkout df14e88 
 uv sync
 
 # 启动 Gradio 网页界面
