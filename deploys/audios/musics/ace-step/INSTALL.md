@@ -7,6 +7,7 @@ git clone https://github.com/ACE-Step/ACE-Step-1.5.git
 cd ACE-Step-1.5
 git checkout df14e88 
 uv sync
+# uv sync --default-index "https://mirrors.aliyun.com/pypi/simple"
 
 # 启动 Gradio 网页界面
 uv run acestep --port 7861 --language zh  --device cuda --lm_model_path acestep-5Hz-lm-0.6B --download-source modelscope --enable-api --init_service true --batch_size 1 --init_llm false

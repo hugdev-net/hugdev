@@ -1,7 +1,11 @@
 ## 快速安装
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+sudo apt install ripgrep ffmpeg build-essential python3-dev libffi-dev
+# 网络需要能访问 GitHub
+
+# curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash
 
 hermes --version
 ```
@@ -10,22 +14,36 @@ hermes --version
 
 - 模型 (hermes setup model)
     - OpenAI Codex
-    -
-    - (○) Custom endpoint (enter URL manually)
-      API base URL: http://172.17.0.1:11434/v1
-      API key: ollama （随便填，一般不会校验）
-      Model: gemma4:26b
+    - 火山
+        - (○) 30. Custom endpoint (enter URL manually)
+        - API base URL [e.g. https://api.example.com/v1]: https://ark.cn-beijing.volces.com/api/v1
+        - API key [optional]: ************************************
+        - Auto-detect [current]
+        - Model name (e.g. gpt-4, llama-3-70b): deepseek-v4-flash-260425
+        - Context length in tokens [leave blank for auto-detect]:
+        - Display name [Ark.cn-beijing.volces.com]: 火山
+    - ollama
+        - (○) Custom endpoint (enter URL manually)
+        - API base URL: http://172.17.0.1:11434/v1
+        - API key: ollama （随便填，一般不会校验）
+        - Model: gemma4:26b
 
 - 通道
-    - hermes gateway setup
-    - Weixin
-    - 扫描
-    - ect ESC cancel
-      → (●) Use DM pairing approval (recommended)
-      (○) Allow all direct messages
-
-    - 全部默认 + Y
-    - hermes pairing approve weixin XXXXXX
+    - 微信
+        - hermes gateway setup
+        - 💬 Weixin / WeChat
+        - Start QR login now? [Y/n]: Y
+        - 扫描
+        - ect ESC cancel
+          → (●) Use DM pairing approval (recommended)
+          (○) Allow all direct messages
+        - 全部默认 + Y
+        - hermes pairing approve weixin XXXXXX
+    - 企业微信
+        - hermes gateway setup
+        - 💬 WeCom (Enterprise WeChat)
+    - 飞书
+    - 钉钉
 
 ## 控制台UI
 
@@ -41,7 +59,8 @@ hermes dashboard
 ## 对话UI
 
 ```text
-git clone https://github.com/nesquena/hermes-webui-git hermes-webuicd hermes-webui
+git clone https://github.com/nesquena/hermes-webui-git hermes-webui
+cd hermes-webui
 python3 bootstrap-py
 ```
 

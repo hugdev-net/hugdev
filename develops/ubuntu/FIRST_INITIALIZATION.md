@@ -178,6 +178,7 @@ EOF
 ##### Ubuntu 22.04
 
 - https://www.nomachine.com/download
+- https://download.nomachine.com/download/?id=1&platform=linux
 
 ```bash
 sudo dpkg -i nomachine_*_amd64.deb
@@ -276,3 +277,7 @@ java -version
 ### 开发 IDE（可选）
 
 Toolbox
+
+### 可选上网
+
+- https://www.clashverge.dev/install.html
