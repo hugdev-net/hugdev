@@ -96,6 +96,15 @@ hermes gateway restart
 hermes gateway stop
 ```
 
+
+## 多 Profile
+
+```bash
+hermes profile create agent_bot
+agent_bot setup
+agent_bot gateway start
+```
+
 ## 其它问题
 
 ```text
