@@ -3,7 +3,12 @@
 # Build:
 #   socat TCP-LISTEN:7898,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:7898
 #   docker build --add-host=host.docker.internal=host-gateway --progress=plain -t hermes_agent_base .
-#   docker run --rm -it hermes_agent_base bash
+#
+#   如何使用：
+#     - docker run --rm -it hermes_agent_base 直接启动 Hermes
+#     - docker run --rm -it hermes_agent_base bash 会进入 Bash
+#     - docker run --rm -it --entrypoint /bin/bash hermes_agent_base 也可以强制进 shell
+
 
 FROM ubuntu22_base:latest
 
@@ -71,5 +76,5 @@ WORKDIR /workspace
 EXPOSE 26707
 VOLUME ["/home/${USER}/.hermes", "/workspace"]
 
-ENTRYPOINT ["/usr/bin/tini", "--", "hermes"]
-CMD []
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["hermes"]

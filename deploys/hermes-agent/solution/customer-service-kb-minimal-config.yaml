@@ -1,0 +1,129 @@
+# Hermes Agent minimal config for a Markdown customer-service KB service.
+#
+# Runtime assumptions:
+# - HERMES_HOME=/opt/data
+# - HERMES_WRITE_SAFE_ROOT=/no-write
+# - /kb is a read-only Docker mount containing only Markdown knowledge files.
+# - /no-write is a read-only Docker mount used as a write trap.
+# - /opt/data is a small writable Hermes runtime/state volume, not the KB.
+#
+# Install/deploy with no bundled skills, for example:
+#   curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --no-skills
+# or, for an existing profile:
+#   hermes skills opt-out --remove
+
+model:
+  # Keep provider/model settings here or inject credentials via environment.
+  # Replace these with the production provider/model used by the service.
+  provider: "auto"
+  default: "anthropic/claude-opus-4.6"
+
+platform_toolsets:
+  # Main safety boundary at the Hermes toolset layer for the API service:
+  # expose only native file tools and explicitly suppress MCP tools.
+  api_server:
+    - file
+    - no_mcp
+
+agent:
+  # Defense-in-depth: remove high-risk or unnecessary toolsets even if a
+  # platform default, profile, or future setup flow tries to re-enable them.
+  disabled_toolsets:
+    - web
+    - search
+    - x_search
+    - vision
+    - video
+    - image_gen
+    - video_gen
+    - computer_use
+    - terminal
+    - moa
+    - skills
+    - browser
+    - cronjob
+    - tts
+    - todo
+    - memory
+    - context_engine
+    - session_search
+    - code_execution
+    - delegation
+    - homeassistant
+    - kanban
+
+terminal:
+  # Terminal tools are disabled above. This cwd is still useful because Hermes
+  # file tools resolve relative paths through the environment cwd.
+  cwd: "/kb"
+  backend: "local"
+  timeout: 30
+  lifetime_seconds: 60
+  docker_mount_cwd_to_workspace: false
+  container_persistent: false
+  home_mode: "profile"
+
+mcp_servers: {}
+
+plugins:
+  enabled: []
+
+skills:
+  disabled: []
+  external_dirs: []
+
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+
+compression:
+  enabled: false
+
+checkpoints:
+  enabled: false
+  auto_prune: false
+
+display:
+  tool_progress: "off"
+  interim_assistant_messages: false
+  long_running_notifications: false
+  cleanup_progress: true
+  show_reasoning: false
+  streaming: true
+  file_mutation_verifier: true
+
+delegation:
+  orchestrator_enabled: false
+  subagent_auto_approve: false
+  inherit_mcp_toolsets: false
+  max_concurrent_children: 0
+  max_spawn_depth: 0
+  max_iterations: 1
+
+code_execution:
+  timeout: 1
+  max_tool_calls: 0
+
+cron:
+  enabled: false
+  provider: ""
+
+kanban:
+  dispatch_in_gateway: false
+
+tool_loop_guardrails:
+  warnings_enabled: true
+  hard_stop_enabled: true
+  warn_after:
+    exact_failure: 2
+    same_tool_failure: 2
+    idempotent_no_progress: 2
+  hard_stop_after:
+    exact_failure: 3
+    same_tool_failure: 3
+    idempotent_no_progress: 3
+
+privacy:
+  redact_pii: true
+
+hooks_auto_accept: false
