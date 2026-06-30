@@ -1,0 +1,63 @@
+#
+# Usage:
+#   cd deploys/hermes-agent
+#   mkdir -p data/hermes workspace readonly
+#   docker compose up -d --build
+#
+# On Linux hosts, if Hermes cannot write data/hermes, align ownership with
+# the Dockerfile runtime user:
+#   sudo chown -R 1263:1263 data/hermes workspace
+#
+services:
+  hermes-agent:
+    image: hermes-agent-base:latest
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        # Keep this aligned with the proxy used by Dockerfile during install.
+        PROXY_URL: socks5://host.docker.internal:7898/
+    container_name: hermes-agent
+    restart: unless-stopped
+
+    # The Dockerfile default command is:
+    #   hermes gateway run
+    # Override command only when you need a different entrypoint behavior, for example:
+    # command: ["hermes", "dashboard", "--host", "0.0.0.0"]
+
+    environment:
+      TZ: Asia/Shanghai
+      HERMES_HOME: /home/agent/.hermes
+      # Safer default: Hermes file-write tools are constrained to a read-only
+      # directory. Change to /workspace only if you intentionally need writes.
+      HERMES_WRITE_SAFE_ROOT: /readonly
+      HERMES_DISABLE_LAZY_INSTALLS: "1"
+
+    ports:
+      # Gateway/API port exposed by the Dockerfile.
+      - "26707:26707"
+      # Uncomment only when running `hermes dashboard --host 0.0.0.0`.
+      # - "9119:9119"
+
+    volumes:
+      # Hermes runtime state. This single bind mount contains:
+      #   config.yaml, .env, state.db*, logs/, sessions/, skills/, auth/, cache/.
+      # Mount the directory instead of individual SQLite files so WAL/SHM files
+      # and first-run initialization work normally.
+      - ./data/hermes:/home/agent/.hermes
+
+      # Optional working directory visible inside Hermes.
+      - ./workspace:/workspace
+
+      # Optional read-only business knowledge or reference files.
+      - ./readonly:/readonly:ro
+
+    extra_hosts:
+      # Allows the build/run proxy URL and host-side local services to work on Linux.
+      - "host.docker.internal:host-gateway"
+
+    logging:
+      driver: local
+      options:
+        max-size: "20m"
+        max-file: "5"

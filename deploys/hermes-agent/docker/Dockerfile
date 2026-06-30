@@ -2,12 +2,12 @@
 
 # Build:
 #   socat TCP-LISTEN:7898,bind=172.17.0.1,fork,reuseaddr TCP:127.0.0.1:7898
-#   docker build --add-host=host.docker.internal=host-gateway --progress=plain -t hermes_agent_base .
+#   docker build --add-host=host.docker.internal=host-gateway --progress=plain -t hermes-agent-base .
 #
 #   如何使用：
-#     - docker run --rm -it hermes_agent_base 直接启动 Hermes
-#     - docker run --rm -it hermes_agent_base bash 会进入 Bash
-#     - docker run --rm -it --entrypoint /bin/bash hermes_agent_base 也可以强制进 shell
+#     - docker run --restart unless-stopped hermes_agent_base hermes gateway run  # 启动 hermes agent 服务
+#     - docker run --rm -it hermes_agent_base hermes # 单次执行 hermes cli 命令
+#     - docker run --rm -it --entrypoint /bin/bash hermes_agent_base # 强制进 shell
 
 
 FROM ubuntu22_base:latest
@@ -28,7 +28,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     HERMES_HOME=/home/${USER}/.hermes \
-    HERMES_WRITE_SAFE_ROOT=/workspace \
+    HERMES_WRITE_SAFE_ROOT=/readonly \
     HERMES_DISABLE_LAZY_INSTALLS=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -57,7 +57,8 @@ RUN set -eux; \
     groupadd --gid "${GROUP_ID}" ${USER}; \
     useradd --uid "${USER_ID}" --gid "${GROUP_ID}" --create-home --home-dir /home/${USER} --shell /bin/bash ${USER}; \
     install -d -o ${USER} -g ${GROUP} -m 0750 /home/${USER}/.hermes; \
-    install -d -o ${USER} -g ${GROUP} -m 0755 /workspace
+    install -d -o ${USER} -g ${GROUP} -m 0755 /workspace; \
+    install -d -o root -g root -m 0555 /readonly
 
 # Install Hermes as the unprivileged user so the checkout, venv, and command
 # link are created under the user's home directory.
@@ -71,10 +72,19 @@ RUN set -eux; \
     git config --global https.proxy "${PROXY_URL}"; \
     curl -fsSL "${HERMES_INSTALL_URL}" | bash -s -- --no-skills --skip-browser --skip-setup --non-interactive
 
+USER root
+
+RUN set -eux; \
+    chown -R root:root /home/${USER}/.local/bin /home/${USER}/.hermes/node /home/${USER}/.hermes/bin; \
+    chmod -R a-w /home/${USER}/.local/bin /home/${USER}/.hermes/node /home/${USER}/.hermes/bin;
+
+USER ${USER}
+
 WORKDIR /workspace
 
 EXPOSE 26707
 VOLUME ["/home/${USER}/.hermes", "/workspace"]
 
+# Keep the gateway process in the foreground so the container stays up.
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["hermes"]
+CMD ["hermes", "gateway", "run"]
