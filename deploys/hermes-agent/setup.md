@@ -28,6 +28,9 @@ hermes --version
         - API key: ollama （随便填，一般不会校验）
         - Model: gemma4:26b
 
+    - (○) Configure auxiliary models...
+        - doubao-seed-2-0-lite-260215
+
 - 通道
     - 微信
         - hermes gateway setup
@@ -95,7 +98,6 @@ hermes gateway
 hermes gateway restart
 hermes gateway stop
 ```
-
 
 ## 多 Profile
 

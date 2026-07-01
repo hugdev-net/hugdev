@@ -75,8 +75,9 @@ RUN set -eux; \
       snapd || true; \
     apt-get install -y --no-install-recommends \
       bash-completion \
+      language-pack-zh-hans language-pack-en \
       ca-certificates \
-      curl \
+      curl wget vim net-tools poppler-utils lsof tar zip unzip xz-utils telnet iputils-ping \
       locales \
       procps \
       tzdata; \
