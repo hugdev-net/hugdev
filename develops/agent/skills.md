@@ -9,5 +9,6 @@
   - https://github.com/multica-ai/andrej-karpathy-skills
 - 代码索引、AI编程
   - https://github.com/abhigyanpatwari/GitNexus
+  - https://github.com/DeusData/codebase-memory-mcp
 - 龙虾自我提升
   - https://github.com/pskoett/pskoett-ai-skills

@@ -27,8 +27,8 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\Devic
 3. 修改数值：双击右侧的 DeviceRegion 键值。在弹出的窗口中，将基数选择为 十进制，并在数值数据中输入目标代码（如日本输入 122）。
 4. 重启设备：关闭注册表编辑器并重启电脑，使底层修改完全生效。
 
-常见错误：如果在修改时系统弹出报错提示 “无法编辑 DeviceRegion:
-写入该值的新内容时出错”，说明该注册表项受到系统最高权限（TrustedInstaller）保护，当前管理员账户没有修改权限。请参考下一章节解锁权限。
+常见错误：如果在修改时系统弹出报错提示 “无法编辑 DeviceRegion:写入该值的新内容时出错”，
+说明该注册表项受到系统最高权限（TrustedInstaller）保护，当前管理员账户没有修改权限。请参考下一章节解锁权限。
 
 ------------------------------
 
