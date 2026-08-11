@@ -17,7 +17,8 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
 chmod 644 $NGINX_PATH/certs/*
 
 #复制相关配置文件
-# rz nginx.conf
+echo " rz nginx.conf ..."
+read WAITING
 
 #启动容器
 docker run -d --add-host=host.docker.internal:host-gateway \
