@@ -1,5 +1,6 @@
-export PROJECT_NAME="app"
+export PROJECT_NAME="aicc_agent"
 export SETUP_PATH="/opt/${PROJECT_NAME}"
+export CONTAINER_NAME="${PROJECT_NAME}_nginx"
 
 export NGINX_PATH="${SETUP_PATH}/nginx"
 export HOST_IP="0.0.0.0"
@@ -22,7 +23,7 @@ read WAITING
 
 #启动容器
 docker run -d --add-host=host.docker.internal:host-gateway \
-  --name ${PROJECT_NAME}_nginx \
+  --name ${CONTAINER_NAME} \
   -p $HOST_IP:8080:80 \
   -p $HOST_IP:8443:443 \
   -v $NGINX_PATH/html:/usr/share/nginx/html \
