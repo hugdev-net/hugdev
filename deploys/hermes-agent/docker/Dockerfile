@@ -32,6 +32,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     HERMES_DISABLE_LAZY_INSTALLS=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
+    UV_DEFAULT_INDEX=https://mirrors.aliyun.com/pypi/simple/ \
     PATH=/home/${USER}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN set -eux; \
