@@ -43,6 +43,11 @@ RUN set -eux; \
       curl \
       git \
       vim \
+      strace \
+      iproute2 \
+      procps \
+      lsof \
+      htop \
       xz-utils \
       net-tools \
       iputils-ping \
