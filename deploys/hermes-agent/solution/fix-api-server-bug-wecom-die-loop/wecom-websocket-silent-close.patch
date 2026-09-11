@@ -1,0 +1,16 @@
+diff --git a/plugins/platforms/wecom/adapter.py b/plugins/platforms/wecom/adapter.py
+--- a/plugins/platforms/wecom/adapter.py
++++ b/plugins/platforms/wecom/adapter.py
+@@ -371,6 +371,10 @@ class WeComAdapter(PlatformAdapter):
+                 if payload:
+                     await self._dispatch_payload(payload)
+             elif msg.type in {aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSED, aiohttp.WSMsgType.ERROR, aiohttp.WSMsgType.CLOSING}:
+                 raise RuntimeError("WeCom websocket closed")
+ 
++        # 防止 websocket silent-close 后 _listen_loop 进入 busy loop
++        if self._running:
++            raise RuntimeError("WeCom websocket closed (no message)")
++
+     async def _heartbeat_loop(self) -> None:
+         """Send lightweight application-level pings."""
+         try:
