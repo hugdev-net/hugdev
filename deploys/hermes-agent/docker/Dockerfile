@@ -78,6 +78,14 @@ RUN set -eux; \
     git config --global https.proxy "${PROXY_URL}"; \
     curl -fsSL "${HERMES_INSTALL_URL}" | bash -s -- --no-skills --skip-browser --skip-setup --non-interactive
 
+COPY --chown=${USER}:${GROUP} patches/wecom-websocket-silent-close.patch /tmp/wecom-websocket-silent-close.patch
+
+RUN git -C /home/agent/.hermes/hermes-agent apply --check /tmp/wecom-websocket-silent-close.patch \
+    && git -C /home/agent/.hermes/hermes-agent apply /tmp/wecom-websocket-silent-close.patch \
+    && grep -Fq 'raise RuntimeError("WeCom websocket closed (no message)")' \
+        /home/agent/.hermes/hermes-agent/plugins/platforms/wecom/adapter.py \
+    && rm /tmp/wecom-websocket-silent-close.patch
+
 USER root
 
 RUN set -eux; \
