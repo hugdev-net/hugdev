@@ -1,10 +1,11 @@
 export PROJECT_NAME="app"
 export SETUP_PATH="/opt/${PROJECT_NAME}"
-
 export REDIS_PATH="${SETUP_PATH}/redis"
 export HOST_IP="host.docker.internal"
+
 export REDIS_PASSWORD=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 16)
 echo "REDIS_PASSWORD: $REDIS_PASSWORD"
+
 export DOCKER_RUN_USER=$(id -u)
 export DOCKER_RUN_GROUP=$(id -g)
 
@@ -24,7 +25,7 @@ docker run -d --add-host=host.docker.internal:host-gateway \
   --restart unless-stopped \
   redis redis-server /etc/redis/redis.conf
 
-docker exec -it redis redis-cli
+docker exec -it ${PROJECT_NAME}_redis redis-cli
 auth $REDIS_PASSWORD
 quit
 
